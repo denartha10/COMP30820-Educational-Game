@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@stomp/stompjs": "^7.0.0",
+    "client": "link:",
     "pixi.js": "^7.4.0"
   }
 }
