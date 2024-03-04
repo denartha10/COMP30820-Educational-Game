@@ -9,108 +9,15 @@
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="/app.js"></script>
   </head>
-  <body class="bg-gray-100">
-    <div class="flex flex-col h-screen">
-      <!-- Chat Area -->
-      <div class="flex flex-col flex-grow overflow-y-auto p-6" id="message-feed">
-        <div class="flex items-end space-x-2 mb-4">
-          <div
-            class="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-500"
-          >
-            <span class="text-white text-lg">A</span>
-          </div>
-          <div class="flex flex-col leading-tight">
-            <div class="text-sm text-gray-600">User A</div>
-            <div class="text-sm text-gray-400">12:00 PM</div>
-          </div>
-        </div>
-        <div class="flex items-end space-x-2 mb-4">
-          <div
-            class="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-500"
-          >
-            <span class="text-white text-lg">B</span>
-          </div>
-          <div class="flex flex-col leading-tight">
-            <div class="text-sm text-gray-600">User B</div>
-            <div class="text-sm text-gray-400">12:01 PM</div>
-          </div>
-        </div>
-        <!-- Add more messages here -->
-      </div>
-      <!-- Input Area -->
-      <div class="border-t border-gray-200 px-4 py-2">
-        <div class="flex items-center justify-between">
-          <input
-            id="messageInput"
-            class="w-full py-2 px-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:border-indigo-500"
-            type="text"
-            placeholder="Type a message..."
-          />
-          <button
-            class="flex items-center justify-center px-4 py-2 rounded-lg bg-indigo-500 text-white hover:bg-indigo-600"
-            onclick="sendMessage()"
-          >
-            Send
-          </button>
-        </div>
-      </div>
-    </div>
-    <script>
-    const stompClient = new StompJs.Client({
-      brokerURL: 'ws://localhost:8080/gs-guide-websocket'
-    });
-
-    stompClient.activate();
-
-    stompClient.onConnect = (frame) => {
-      console.log('Connected: ' + frame);
-      stompClient.subscribe('/topic/greetings', (greeting) => {
-        showGreeting(JSON.parse(greeting.body).content);
-      })
-    }
-
-    stompClient.onWebSocketError = (error) => {
-      console.error('Error')
-    }
-
-    stompClient.onStompError = (frame) => {
-      console.log('Broker reported error: ' + frame.headers['message']);
-      console.log('Additional details: ' + frame.body);
-    }
-
-    function connect() {
-      stompClient.activate();
-    }
-
-    function disconnect() {
-      stompClient.deactivate();
-      console.log('Disconnected');
-    }
-
-    function sendMessage(){
-      stompClient.publish({
-        destination: "/app/hello",
-        body: JSON.stringify({'name' : document.getElementById('messageInput').value})
-      })
-    }
-
-    function showGreeting(message) {
-      const now = new Date()
-      const HTMLOutput = `
-      <div class="flex items-end space-x-2 mb-4">
-          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-500">
-              <span class="text-white text-lg">YupCha</span>
-          </div>
-          <div class="flex flex-col leading-tight">
-              <div class="text-sm text-gray-600">${message}</div>
-              <div class="text-sm text-gray-400">${now.getHours()}:${now.getMinutes()}</div>
-          </div>
-      </div
-      `
-      const messageFeed = document.getElementById('message-feed');
-      messageFeed.insertAdjacentHTML('beforeend', HTMLOutput);
-    }
-  </script>
+  <body class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="bg-white p-8 rounded shadow-md" id="start-form">
+    <h1 class="text-2xl font-bold mb-4">Enter Your Name</h1>
+    <form class="flex flex-col">
+      <input class="border-2 border-gray-300 rounded p-2 mb-4" type="text" id="playerName" name="playerName" placeholder="Your Name" required minlength="3">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button" onclick="start()">Start Game</button>
+    </form>
+  </div>
   </body>
 </html>
