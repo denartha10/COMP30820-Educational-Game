@@ -1,18 +1,23 @@
-//PixiJS is a rendering engine, and it supports additional features such as interaction management that are commonly needed when using a render engine. But it is not a framework like Unity or Phaser. Frameworks are designed to do all the things you'd need to do when building a game - user settings management, music playback, object scripting, art pipeline management... the list goes on. PixiJS is designed to do one thing really well - render graphical content. This lets us focus on keeping up with new technology, and makes downloading PixiJS blazingly fast.
+import {Client, Message} from '@stomp/stompjs';
 
-const websocketURL = 'ws://localhost:8080/gs-guide-websocket';
-const playerIDKey = 'playerID';
+const websocketURL: string = 'ws://localhost:8080/gs-guide-websocket';
+const playerIDKey: string = 'playerID';
 
-const stompClient = new StompJs.Client({
+const stompClient = new Client({
     brokerURL: websocketURL
-});
+})
 
 const handleMove = (direction) => () => {
-    const playerID = localStorage.getItem(playerIDKey);
-    stompClient.publish({
-        destination: "/app/move",
-        body: JSON.stringify({ 'direction': direction, 'playerID': playerID })
-    });
+    const playerID: string | null = localStorage.getItem(playerIDKey);
+    if (!playerID) {
+        console.error("Player ID not found");
+        return;
+    }else {
+        stompClient.publish({
+            destination: "/app/move",
+            body: JSON.stringify({'direction': direction, 'playerID': playerID})
+        });
+    }
 };
 
 const start = () => {
