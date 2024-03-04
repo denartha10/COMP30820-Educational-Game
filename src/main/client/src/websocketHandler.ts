@@ -1,4 +1,6 @@
 import { Client } from "@stomp/stompjs";
+import { addGameView, redraw } from "./render";
+import { GameState } from "./types";
 
 const websocketURL: string = "ws://localhost:8080/gs-guide-websocket";
 const playerIDKey: string = "playerID";
@@ -13,7 +15,7 @@ stompClient.activate();
 // subscribe to the topic and set the callback function for when a message is received
 stompClient.onConnect = () => {
   stompClient.subscribe("/topic/board", (frame) => {
-    const gameState = JSON.parse(frame.body);
+    const gameState: GameState = JSON.parse(frame.body);
     const storedPlayerID = localStorage.getItem(playerIDKey);
 
     if (gameState.playerID && !storedPlayerID) {
@@ -21,7 +23,7 @@ stompClient.onConnect = () => {
       console.log("Your ID is " + localStorage.getItem(playerIDKey));
     }
 
-    console.log(gameState);
+    redraw(gameState);
   });
 };
 
@@ -29,7 +31,6 @@ stompClient.onConnect = () => {
 stompClient.onWebSocketClose = () => {
   localStorage.removeItem(playerIDKey);
 };
-
 
 // send a message to the server to move the player
 // send it to the /app/move endpoint
@@ -88,6 +89,8 @@ const start = () => {
           break;
       }
     });
+
+    addGameView();
   }
 };
 

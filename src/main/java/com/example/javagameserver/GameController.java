@@ -22,17 +22,17 @@ public class GameController extends TextWebSocketHandler {
     // Handles move events
     @MessageMapping("/move")
     @SendTo("/topic/board")
-    public Board handleMove(MoveMessage move) {
+    public StateMessage handleMove(MoveMessage move) {
         // Process the move, update the board, and broadcast the updated board state
         return processMove(move);
     }
 
-    private Board processMove(MoveMessage move) {
+    private StateMessage processMove(MoveMessage move) {
         Player player = gameBoard.getPlayerById(move.getPlayerID());
         if (player != null) {
             player.movePlayer(move.getDirection());
         }
-        return gameBoard;
+        return new StateMessage(gameBoard, move.getPlayerID());
     }
 
 
