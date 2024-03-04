@@ -26,13 +26,6 @@ public class Board {
         return players.get(id);
     }
 
-    public void updatePlayerLocation(UUID id, int x, int y) {
-        Player player = players.get(id);
-        if (player != null) {
-            player.setLocation(x, y);
-        }
-    }
-
     public HashMap<UUID, Player> getPlayers() {
         return players;
     }
