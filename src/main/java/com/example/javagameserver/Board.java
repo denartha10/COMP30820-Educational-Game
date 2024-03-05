@@ -29,4 +29,19 @@ public class Board {
     public HashMap<UUID, Player> getPlayers() {
         return players;
     }
+
+    public void movePlayer(UUID id, String direction) {
+        Player player = players.get(id);
+        if (player != null) {
+            if (direction.equals("UP") && player.getY() > 0) {
+                player.movePlayer(direction);
+            } else if (direction.equals("DOWN") && player.getY() < getHeight() - 1) {
+                player.movePlayer(direction);
+            } else if (direction.equals("LEFT") && player.getX() > 0) {
+                player.movePlayer(direction);
+            } else if (direction.equals("RIGHT") && player.getX() < getWidth() - 1) {
+                player.movePlayer(direction);
+            }
+        }
+    }
 }

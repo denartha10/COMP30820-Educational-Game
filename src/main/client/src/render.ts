@@ -1,17 +1,13 @@
 import * as PIXI from "pixi.js";
 import type { GameState } from "./types";
 
-const gameWidth: number = ((window.innerHeight * 0.9) / 10) * 16;
-const gameHeight: number = window.innerHeight * 0.9;
-
-// TEMPORARY FIX WHILE I FIGUER OUT HOW TO MAKE DYNAMIC HEIHT AND WIDTH
-const adjudstedGameWidth: number = Math.floor(gameWidth / 40) * 40;
-const adjudstedGameHeight: number = Math.floor(gameHeight / 40) * 40;
+const boardDisplayWidth: number = 800;
+const boardDisplayHeight: number = 800;
 
 // this is a 16:9 aspect ratio
 let game = new PIXI.Application<HTMLCanvasElement>({
-  width: adjudstedGameWidth,
-  height: adjudstedGameHeight,
+  width: boardDisplayWidth,
+  height: boardDisplayHeight,
 });
 
 // create a pixi graphics
@@ -27,33 +23,36 @@ const addGameView = () => {
 
 const redraw = (gameState: GameState) => {
   const players = gameState.board.players;
-  const tileWidthSize = gameState.board.width;
-  const tileHeightSize = gameState.board.height;
 
-  const numTilesX = game.view.width / tileWidthSize;
-  const numTilesY = game.view.height / tileHeightSize;
+  // number of x tiles
+  const tileWidthCount = gameState.board.width;
+  // number of y tiles
+  const tileHeightCount = gameState.board.height;
 
-  for (let x = 0; x < numTilesX; x++) {
-    for (let y = 0; y < numTilesY; y++) {
+  const tileDisplayWidth = boardDisplayWidth / tileWidthCount;
+  const tileDisplayHeight = boardDisplayHeight / tileHeightCount;
+
+  for (let x = 0; x < tileWidthCount; x++) {
+    for (let y = 0; y < tileHeightCount; y++) {
       // Example color: red
-      graphics.beginFill(0xff0000); // Red color
+      graphics.beginFill(0x000000); // Black color
       graphics.drawRect(
-        x * tileWidthSize,
-        y * tileHeightSize,
-        tileWidthSize,
-        tileHeightSize,
+        x * tileDisplayWidth,
+        y * tileDisplayHeight,
+        tileDisplayWidth,
+        tileDisplayHeight,
       );
       graphics.endFill();
     }
   }
 
   for (const p of Object.values(players)) {
-    graphics.beginFill(0x000000);
+    graphics.beginFill(parseInt(p.color, 16));
     graphics.drawRect(
-      p.x * tileWidthSize,
-      p.y * tileHeightSize,
-      tileWidthSize,
-      tileHeightSize,
+      p.x * tileDisplayWidth,
+      p.y * tileDisplayHeight,
+      tileDisplayWidth,
+      tileDisplayHeight,
     );
     graphics.endFill();
   }

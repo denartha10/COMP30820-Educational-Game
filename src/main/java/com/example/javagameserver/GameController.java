@@ -28,10 +28,7 @@ public class GameController extends TextWebSocketHandler {
     }
 
     private StateMessage processMove(MoveMessage move) {
-        Player player = gameBoard.getPlayerById(move.getPlayerID());
-        if (player != null) {
-            player.movePlayer(move.getDirection());
-        }
+        gameBoard.movePlayer(move.getPlayerID(), move.getDirection());
         return new StateMessage(gameBoard, move.getPlayerID());
     }
 

@@ -1,5 +1,6 @@
 type Player = {
   playerID: string; // Assuming UUID or string is represented as string
+  color: string;
   x: number;
   y: number;
 };
