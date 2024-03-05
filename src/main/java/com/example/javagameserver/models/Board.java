@@ -1,4 +1,6 @@
-package com.example.javagameserver;
+package com.example.javagameserver.models;
+
+import com.example.javagameserver.models.Player;
 
 import java.util.HashMap;
 import java.util.UUID;

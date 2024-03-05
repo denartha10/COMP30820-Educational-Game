@@ -1,5 +1,9 @@
-package com.example.javagameserver;
+package com.example.javagameserver.controllers;
 
+import com.example.javagameserver.models.Board;
+import com.example.javagameserver.models.MoveMessage;
+import com.example.javagameserver.models.Player;
+import com.example.javagameserver.models.StateMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;

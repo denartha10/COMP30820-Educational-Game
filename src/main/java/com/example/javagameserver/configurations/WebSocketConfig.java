@@ -1,4 +1,4 @@
-package com.example.javagameserver;
+package com.example.javagameserver.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

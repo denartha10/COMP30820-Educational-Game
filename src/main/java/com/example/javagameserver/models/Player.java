@@ -1,4 +1,4 @@
-package com.example.javagameserver;
+package com.example.javagameserver.models;
 
 import java.util.UUID;
 import java.util.Random;
