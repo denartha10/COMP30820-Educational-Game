@@ -4,10 +4,14 @@ import type { GameState } from "./types";
 const gameWidth: number = ((window.innerHeight * 0.9) / 10) * 16;
 const gameHeight: number = window.innerHeight * 0.9;
 
+// TEMPORARY FIX WHILE I FIGUER OUT HOW TO MAKE DYNAMIC HEIHT AND WIDTH
+const adjudstedGameWidth: number = Math.floor(gameWidth / 40) * 40;
+const adjudstedGameHeight: number = Math.floor(gameHeight / 40) * 40;
+
 // this is a 16:9 aspect ratio
 let game = new PIXI.Application<HTMLCanvasElement>({
-  width: gameWidth,
-  height: gameHeight,
+  width: adjudstedGameWidth,
+  height: adjudstedGameHeight,
 });
 
 // create a pixi graphics
