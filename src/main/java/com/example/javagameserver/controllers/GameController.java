@@ -13,6 +13,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class GameController extends TextWebSocketHandler {
 
     private final Board gameBoard = new Board();
+
     // Handles the initial connection and sends the initial game state
     @MessageMapping("/initialise")
     @SendTo("/topic/board")
