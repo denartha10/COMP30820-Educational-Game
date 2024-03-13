@@ -2,18 +2,36 @@ package com.example.javagameserver.models;
 
 import java.util.UUID;
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Player {
     private final UUID id;
     private final String color;
     private int x;
     private int y;
+    private static final int defaultCO2Budget = 1000;
+    private int CO2Budget;
+    private int totalCO2;                           // For recording Total CO2 for entire game.
+    private int totalDistance;                      // For recording Total Distance for entire game.
+    private int score;
+    private int streakCounter;
+    private ArrayList<Integer> streakArray;        // Stores values of previous streaks if streak broken.
+    private ArrayList<Gem> gemInventory;
+    private int quizScore;                          // Not yet in use.
 
     public Player() {
         this.id = UUID.randomUUID();
         this.color = generateRandomColor();
         this.x = 0;
         this.y = 0;
+        this.CO2Budget = defaultCO2Budget; // Arbitrary value as placeholder.
+        this.score = 0;
+        this.streakCounter = 0;
+        this.totalCO2 = 0;
+        this.totalDistance = 0;
+        this.gemInventory = new ArrayList<>();
+        this.streakArray = new ArrayList<>();
     }
 
     private String generateRandomColor() {
@@ -29,6 +47,7 @@ public class Player {
     public int getX() {
         return x;
     }
+
     public int getY() {
         return y;
     }
@@ -53,4 +72,43 @@ public class Player {
     public String getColor() {
         return color;
     }
+
+    public int getScore() {return this.score;}
+
+    public void updateScore(Gem gem) {this.score += gem.getValue();}
+
+    public void updateCO2Budget(RouteOption route) {this.CO2Budget -= route.getRouteCO2();}
+
+    public void resetCO2Budget() {this.CO2Budget = defaultCO2Budget;}
+
+    public void addGem(Gem gem) {gemInventory.add(gem);}
+
+    public int getGemCount() {return gemInventory.size();}
+
+    public int getTotalCO2() {return totalCO2;}
+
+    public void updateTotalCO2(RouteOption route) {this.totalCO2 += route.getRouteCO2();}
+
+    public int getTotalDistance() {return this.totalDistance;}
+
+    public void updateTotalDistance(RouteOption route) {this.totalDistance += route.getRouteDistance();}
+
+    public void streakHandler(RouteOption route) {
+        if(route.getEco()){
+            this.streakCounter += 1;
+        }
+        else {
+            streakArray.add(this.streakCounter);
+            this.streakCounter = 0;
+        }
+    }
+
+    // Might use average CO2 per km travelled in total to give player a final eco rating?
+    public int averageCO2PerKm() {return this.totalCO2/this.totalDistance;}
+
+    public int getCurrentStreak() {return this.streakCounter;}
+
+    public int getMaxStreak() {return Collections.max(this.streakArray);}
+
+
 }
