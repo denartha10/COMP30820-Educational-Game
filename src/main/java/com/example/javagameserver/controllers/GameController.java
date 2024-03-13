@@ -15,8 +15,8 @@ public class GameController extends TextWebSocketHandler {
     private final Board gameBoard = new Board();
 
     // Handles the initial connection and sends the initial game state
-    @MessageMapping("/initialise")
-    @SendTo("/topic/board")
+    @MessageMapping("/initialise")      // Send to front end via "/initialise" WebSocket destination?
+    @SendTo("/topic/board")             // Send to front end via "/initialise" WebSocket destination?
     public StateMessage initialisePlayer() {
         // Initialize the game and send the initial board state
         Player newPlayer = new Player();

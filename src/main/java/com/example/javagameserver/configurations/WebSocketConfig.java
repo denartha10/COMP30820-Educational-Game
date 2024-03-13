@@ -6,8 +6,17 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-@Configuration // This indicates that it is a spring configuration class
-@EnableWebSocketMessageBroker // This enables a websocket handler backed by a message broker. What is a message broker? what is a handler?
+// This indicates that it is a spring configuration class.
+@Configuration
+// This enables a websocket handler backed by a message broker.
+// A message broker is a component responsible for routing messages between clients and handling
+// communication between them. It facilitates the exchange of messages between different parts of
+// an application or between different applications.
+@EnableWebSocketMessageBroker
+
+// implements the WebSocketMessageBrokerConfigurer interface, which provides methods for configuring
+// WebSocket-related settings.
+
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
    @Override
    public void configureMessageBroker(MessageBrokerRegistry config){
