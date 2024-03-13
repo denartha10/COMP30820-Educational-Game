@@ -75,7 +75,7 @@ public class Player {
 
     public int getScore() {return this.score;}
 
-    public void updateScore(Gem gem) {this.score += gem.getValue();}
+    public void updateScore(int gemValue) {this.score += gemValue;}
 
     public void updateCO2Budget(RouteOption route) {this.CO2Budget -= route.getRouteCO2();}
 

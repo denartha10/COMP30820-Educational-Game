@@ -36,11 +36,11 @@ public class RouteOption {
     };
         // startX and startY are the coordinates of the player.
         // endX and endY are the coordinates of the player.
-    public RouteOption(int startX, int startY, int endX, int endY, int modeIndex, int routeDistance){
-        this.startX = startX;
-        this.startY = startY;
-        this.endX = endX;
-        this.endY = endY;
+    public RouteOption(Gem gem, Player player, int modeIndex, int routeDistance){
+        this.startX = player.getX();
+        this.startY = player.getY();
+        this.endX = gem.getX();
+        this.endY = gem.getY();
         this.selectedModeIndex = modeIndex;
         this.selectedMode = RouteOption.transportationModes[modeIndex][0];
         this.speed = Integer.parseInt(RouteOption.transportationModes[modeIndex][1]);

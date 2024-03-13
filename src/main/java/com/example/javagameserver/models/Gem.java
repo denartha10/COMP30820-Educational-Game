@@ -14,11 +14,8 @@ public class Gem {
     private int x;
     private int y;
     private final int value;
-
     private final int gemColour;
-
     private boolean collectStatus;
-
     // Array of gem types with Gem Value:RGB colour values in hexadecimal.
     private static final int[][] gemValues = {
             {1, 0x00CC00},      // Green
@@ -29,7 +26,8 @@ public class Gem {
             {100,  0xFF9933},   // Orange
             {200,  0xA0A0A0},   // Grey
     };
-
+    private static final int gemCollectRangeX = 5;
+    private static final int gemCollectRangeY = 5;
     public Gem(int gem_index, int x, int y ){
 
         this.gemId = UUID.randomUUID();
@@ -61,8 +59,13 @@ public class Gem {
 
     public boolean getGemStatus() {return this.collectStatus;}
 
-    public void collectGem(){
-        Gem.collectedGems++;
-        this.collectStatus = true;
+    public void collectGem(Player player){
+        if((Math.abs((player.getX() - this.getX())) <= gemCollectRangeX)
+                && (Math.abs((player.getY() - this.getY())) <= gemCollectRangeY)) {
+            Gem.collectedGems++;
+            this.collectStatus = true;
+            player.updateScore(this.value);
+            player.addGem(this);
+        }
     }
 }
