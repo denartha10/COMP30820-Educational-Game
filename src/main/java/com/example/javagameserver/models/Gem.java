@@ -28,6 +28,7 @@ public class Gem {
     };
     private static final int gemCollectRangeX = 5;
     private static final int gemCollectRangeY = 5;
+
     public Gem(int gem_index, int x, int y ){
 
         this.gemId = UUID.randomUUID();
